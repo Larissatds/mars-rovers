@@ -14,6 +14,12 @@ jobs:
       # Checkout do código
       - uses: actions/checkout@v3
 
+      # Confirmar que estamos na raiz do repositório
+      - name: Verificar diretório de trabalho
+        run: |
+          echo "Diretório atual: $(pwd)"
+          ls -la
+
       # Configuração do .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
