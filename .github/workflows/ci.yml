@@ -19,10 +19,10 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Restore dependencies
-        run: dotnet restore MinhaSolucao.sln
+        run: dotnet restore MarsRovers.sln
 
       - name: Build
-        run: dotnet build MinhaSolucao.sln --no-restore
+        run: dotnet build MarsRovers.sln --no-restore
 
       - name: Run tests
         run: dotnet test MarsRovers.sln --no-build --verbosity normal
