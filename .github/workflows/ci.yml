@@ -20,12 +20,13 @@ jobs:
         run: |
           echo "Diretório atual: $(pwd)"
           ls -la
+          ls -la MarsRovers
 
       # Configuração do .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 6.0.x # Altere se estiver usando outra versão
 
       # Verificar se o arquivo .sln está presente
       - name: Verificar a existência do arquivo .sln
@@ -34,13 +35,13 @@ jobs:
           find . -name "*.sln"
 
       # Restaurar dependências
-      - name: Restore dependencies
-        run: dotnet restore MarsRovers.sln
+      - name: Restaurar dependências
+        run: dotnet restore MarsRovers/MarsRovers.sln
 
       # Build do projeto
-      - name: Build
-        run: dotnet build MarsRovers.sln --no-restore
+      - name: Compilar solução
+        run: dotnet build MarsRovers/MarsRovers.sln --no-restore --configuration Release
 
-      # Testar o projeto
-      - name: Run tests
-        run: dotnet test MarsRovers.sln --no-build --verbosity normal
+      # Executar testes
+      - name: Executar testes
+        run: dotnet test MarsRovers/MarsRovers.sln --no-build --verbosity normal
