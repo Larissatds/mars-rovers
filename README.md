@@ -84,9 +84,6 @@ Configurado com GitHub Actions em `.github/workflows/ci.yml`
 ## Exemplo de Entrada/Saída
 ### Entrada:
 ```bash
-mathematica
-Copiar
-Editar
 5 5
 1 2 N
 LMLMLMLMM
@@ -96,9 +93,6 @@ MMRMMRMRRM
 
 ### Saída Esperada:
 ```bash
-mathematica
-Copiar
-Editar
 1 3 N
 5 1 E
 ```
