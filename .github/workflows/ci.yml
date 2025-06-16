@@ -11,29 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código
       - uses: actions/checkout@v3
 
-      # Confirmar que estamos na raiz do repositório
       - name: Verificar diretório de trabalho
         run: |
           echo "Diretório atual: $(pwd)"
           ls -la
 
-      # Configuração do .NET
+      - name: Mudar para a raiz do repositório
+        run: |
+          cd ..
+          echo "Novo diretório: $(pwd)"
+          ls -la
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
 
-      # Restaurar dependências
       - name: Restore dependencies
         run: dotnet restore MarsRovers.sln
 
-      # Build do projeto
       - name: Build
         run: dotnet build MarsRovers.sln --no-restore
 
-      # Testar o projeto
       - name: Run tests
         run: dotnet test MarsRovers.sln --no-build --verbosity normal
