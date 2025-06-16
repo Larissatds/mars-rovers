@@ -7,9 +7,24 @@ class Program
     {
         Console.WriteLine("Informe o tamanho do planalto (exemplo: 5 5):");
         var plateauInput = Console.ReadLine();
-        var plateauCoords = plateauInput.Split(' ');
 
-        var plateau = new Plateau(int.Parse(plateauCoords[0]), int.Parse(plateauCoords[1]));
+        if (string.IsNullOrWhiteSpace(plateauInput))
+        {
+            Console.WriteLine("Entrada inválida. O programa será encerrado.");
+            return;
+        }
+
+        var plateauCoords = plateauInput?.Split(' ');
+
+        if (plateauCoords == null || plateauCoords.Length != 2 ||
+            !int.TryParse(plateauCoords[0], out int plateauWidth) ||
+            !int.TryParse(plateauCoords[1], out int plateauHeight))
+        {
+            Console.WriteLine("Coordenadas inválidas. O programa será encerrado.");
+            return;
+        }
+
+        var plateau = new Plateau(plateauWidth, plateauHeight);
 
         var rovers = new List<Rover>();
         var roverService = new RoverService(plateau);
@@ -22,9 +37,14 @@ class Program
                 break;
 
             var posParts = posInput.Split(' ');
-            var x = int.Parse(posParts[0]);
-            var y = int.Parse(posParts[1]);
-            var dir = Enum.Parse<Direction>(posParts[2].ToUpper(), true);
+            if (posParts.Length != 3 ||
+                !int.TryParse(posParts[0], out int x) ||
+                !int.TryParse(posParts[1], out int y) ||
+                !Enum.TryParse<Direction>(posParts[2].ToUpper(), true, out var dir))
+            {
+                Console.WriteLine("Posição inicial inválida. Tente novamente.");
+                continue;
+            }
 
             try
             {
@@ -33,7 +53,13 @@ class Program
                 Console.WriteLine("Informe comandos da sonda (exemplo: LMLMLMLMM):");
                 var commands = Console.ReadLine();
 
-                roverService.ExecuteCommands(rover, commands);
+                if (string.IsNullOrWhiteSpace(commands))
+                {
+                    Console.WriteLine("Comandos inválidos. Tente novamente.");
+                    continue;
+                }
+
+                roverService.ExecuteCommands(rover, commands!);
 
                 rovers.Add(rover);
                 Console.WriteLine($"Posição final da sonda: {rover.Position.X} {rover.Position.Y} {rover.Direction.ToString()[0]}");
