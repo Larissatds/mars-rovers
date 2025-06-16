@@ -11,37 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código
       - name: Checkout do repositório
         uses: actions/checkout@v3
 
-      # Verificar diretório de trabalho e conteúdo
       - name: Verificar diretório de trabalho
         run: |
           echo "Diretório atual: $(pwd)"
           ls -la
           ls -la MarsRovers
 
-      # Configuração do .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x # Altere se estiver usando outra versão
+          dotnet-version: 6.0.x
 
-      # Verificar se o arquivo .sln está presente
       - name: Verificar a existência do arquivo .sln
         run: |
           echo "Procurando o arquivo .sln"
           find . -name "*.sln"
 
-      # Restaurar dependências
       - name: Restaurar dependências
         run: dotnet restore MarsRovers/MarsRovers.sln
 
-      # Build do projeto
       - name: Compilar solução
         run: dotnet build MarsRovers/MarsRovers.sln --no-restore --configuration Release
 
-      # Executar testes
       - name: Executar testes
-        run: dotnet test MarsRovers/MarsRovers.sln --no-build --verbosity normal
+        run: dotnet test MarsRovers/MarsRovers.sln --verbosity normal
